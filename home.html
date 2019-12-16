@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+
+    <style>
+        body {
+            background-image: url("images/background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script type="text/javascript" src="snowstorm.js"></script>
+    <script type="text/javascript">
+        //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
+        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view
+    </script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo.png"  width="200" class="d-inline-block align-top"
+                onclick="magic()" alt="Magic of Christmas">
+        </a>
+        <a class="navbar-brand" href="#">Welcome to the North Pole Console</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">The List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">The Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">The Journey</a>
+                </li>
+            </ul>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Naughty or Nice?" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Check the List</button>
+            </form>
+        </div>
+    </nav>
+    <p style ="color:ghostwhite;font-size:40px;">What would you like to do today?</h1>
+
+    <div>
+        <div style="width: 50%; align-self:center; border-color:black; border-style:dashed">
+            <div style="width: 50%; border-color:black; border-style:dashed">
+                    <a href="about.html"><img class="image" src="images/toy.png" height="120"><a>
+            </div>
+            <div style="width: 50%; float:left">
+                <button type="button" class="btn btn-light btn-block" id="btnList">Work with The List</button>
+            </div>
+            <div style="width: 50%; align-self:center; border-color:black; border-style:dashed; clear:left" >
+                <a href="about.html"><img class="image" src="images/toy.png" height="120"></a>
+            </div>
+            <div style="float:left">
+                <button type="button" class="btn btn-light btn-block" id="btnList">Work with The Stock</button>
+            </div>
+            <div style="width: 50%; align-self:center; border-color:black; border-style:dashed"  clear:left>
+                <a href="about.html"><img class="image" src="images/toy.png" height="120"></a>
+            </div>
+            <div float:left>
+                <button type="button" class="btn btn-light btn-block" id="btnList">Work with The Journeyist</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    function magic(){
+        snowStorm.toggleSnow()
+       /* snowStorm.snowColor = getRandomColor();
+        console.log(snowStorm.snowColor)
+                //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
+        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view*/
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
+</script>
+
+</html>

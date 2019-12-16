@@ -1,0 +1,39 @@
+create table people (
+id int NOT NULL AUTO_INCREMENT,
+name varchar(250),
+gender varchar(10),
+age int,
+nice boolean,
+toy varchar(250),
+chimney boolean,
+toyok boolean,
+PRIMARY KEY(id));
+
+
+create table toys(
+itemId int NOT NULL AUTO_INCREMENT,
+item varchar(250),
+stock int,
+PRIMARY KEY(itemId));
+
+
+
+insert into people (name, gender, age, nice, toy, chimney) values ("John", "boy", 10, 1, "bike", 1);
+insert into people (name, gender, age, nice, toy, chimney) values ("Mary", "girl", 8, 1, "dolls house", 1);
+insert into people (name, gender, age, nice, toy, chimney) values ("Peter", "boy", 6, 0, "bb gun", 1);
+insert into people (name, gender, age, nice, toy, chimney) values ("Anne", "girl", 11, 1, "x-box", 0);
+insert into people (name, gender, age, nice, toy, chimney) values ("Emily", "girl", 7, 0, "new teacher", 0); 
+
+
+insert into toys (item, stock) values ("bike", 20);
+insert into toys (item, stock) values ("doll", 17);
+insert into toys (item, stock) values ("playstation", 25);
+insert into toys (item, stock) values ("hula hoop", 5);
+insert into toys (item, stock) values ("jigsaw", 15);
+insert into toys (item, stock) values ("book", 110);
+insert into toys (item, stock) values ("new baby brother", 3);
+insert into toys (item, stock) values ("diamond necklace", 1);
+insert into toys (item, stock) values ("hurley", 13);
+insert into toys (item, stock) values ("x-box", 0);
+
+
