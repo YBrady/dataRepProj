@@ -19,7 +19,7 @@ class SantaDAO:
         # Create the cursor
         cursor = self.db.cursor()
         # The SQL statement - without actual values
-        sql = "insert into people (name, gender, age, nice, toy, chimney) values (%s,%s, %s,%s, %s, %s)"
+        sql = "insert into people (name, gender, age, nice, toy, chimney, toyok) values (%s,%s, %s,%s, %s, %s, %s)"
         # Putting the SQL statement and the values together for execution
         cursor.execute(sql, values)
         # Commit changes to db
@@ -27,7 +27,7 @@ class SantaDAO:
         # Return the id number of the new person created
         return cursor.lastrowid
 
-    def createStock(self, values):
+    def createToy(self, values):
         # Create the cursor
         cursor = self.db.cursor()
         # The SQL statement - without actual values
@@ -60,7 +60,7 @@ class SantaDAO:
 
 
     # Function to return all rows
-    def getAllStock(self):
+    def getAllToys(self):
         # Create the cursor
         cursor = self.db.cursor()
         # Make the select statment
@@ -74,7 +74,7 @@ class SantaDAO:
         # One by one, for the results
         for result in results:
             # Turn each result into a dictionary object
-            returnArray.append(self.convertToStockDictionary(result))
+            returnArray.append(self.convertToToysDictionary(result))
         # Return the converted results
         return returnArray
 
@@ -94,19 +94,19 @@ class SantaDAO:
         return self.convertToPeopleDictionary(result)
 
     # Find an item by their id number
-    def findStockByID(self, id):
+    def findToysByID(self, itemId):
         # Create the cursor
         cursor = self.db.cursor()
         # The SQL statement
-        sql = "select * from toys where itenId = %s"
+        sql = "select * from toys where itemId = %s"
         # Add the values (has to be in brackets with a comma as a tuple is expected)
-        values = (id,)
+        values = (itemId,)
         # Perform the SQL statement
         cursor.execute(sql, values)
         # Collect the results - fetchOne = 1 result
         result = cursor.fetchone()
         # Return the dictionary converted result
-        return self.convertToStockDictionary(result)
+        return self.convertToToysDictionary(result)
 
     # Function to update a row - assumed new values are entered when calling the function
     def updatePeople(self, values):
@@ -120,11 +120,11 @@ class SantaDAO:
         self.db.commit()
 
     # Function to update a row - assumed new values are entered when calling the function
-    def updateStock(self, values):
+    def updateToys(self, values):
         # Create the cursor
         cursor = self.db.cursor()
         # Write the SQL statement without the values
-        sql = "update toys set item= %s, stock = %s where id = %s"
+        sql = "update toys set item= %s, stock = %s where itemId = %s"
         # Perform the update
         cursor.execute(sql, values)
         # Commit to database
@@ -147,13 +147,13 @@ class SantaDAO:
         print("delete done")
 
     # Function to delete a row - assuming id is enered when function is called
-    def deleteStock(self, id):
+    def deleteToys(self, itemId):
         # Create the cursror
         cursor = self.db.cursor()
         # Make the SQL statement without values
         sql = "delete from toys where id = %s"
         # Add the values
-        values = (id,)
+        values = (itemId,)
         # Execute the SQL statement
         cursor.execute(sql, values)
         # Commit the changes
@@ -170,23 +170,26 @@ class SantaDAO:
         if result:
             # For every column name
             for i, colName in enumerate(colnames):
-                # Match the column name with the result based on location in tuple
-                item[colName] = result[i]
+                if result[i] is None:
+                    item[colName] = ""
+                else:
+                    # Match the column name with the result based on location in tuple
+                    item[colName] = result[i]
         # Return the dictionary-ise item
         return item
 
     # Function to convert the return values to dictionary items
-    def convertToStockDictionary(self, result):
+    def convertToToysDictionary(self, result):
         # Create the column names
-        colnames = ["itenId", "Item", "Stock"]
+        tcolnames = ["itemId", "item", "stock"]
         item = {}  # blank dictionary object
         # Execute only if the result has something in it
         if result:
             # For every column name
-            for i, colName in enumerate(colnames):
+            for i, colName in enumerate(tcolnames):
                 # Match the column name with the result based on location in tuple
                 item[colName] = result[i]
         # Return the dictionary-ise item
         return item
 
-bookDAO = BookDAO()
+santaDAO = SantaDAO()

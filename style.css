@@ -1,0 +1,59 @@
+
+body{
+	background-color: firebrick;
+}
+
+.body-home{
+	margin: 0;
+	padding: 0;
+	font-family: "Arial", serif;
+	background-image: url("images/background.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;   
+}
+
+html, body {
+	height:100%;
+}
+
+.header {
+	color:ghostwhite;
+	font-size:40px;
+	padding: 10;
+	margin: 10;
+}
+
+.left-half-page{
+	width: 45%; 
+	float: left;	
+}
+.right-half-page{
+	width: 45%; 
+	float: left;
+}
+.spacer-row{
+	width: auto;
+}
+
+.myForm{
+	color:ghostwhite;
+	font-size:20px;
+	padding: 10;
+	margin: 10;	
+}
+
+/*
+.pic {
+	width: 50%; 
+	border-color:black; 
+	border-style:dashed;
+	float:left;
+}
+
+.but {
+	width: 50%; 
+	border-color:black; 
+	border-style:dashed;
+	float:left;
+
+}*/

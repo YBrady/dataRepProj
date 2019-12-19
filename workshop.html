@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Workshop Admin</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script type="text/javascript" src="snowstorm.js"></script>
+    <!--- Call the script for AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
+        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view
+    </script>
+
+</head>
+
+<body>
+    <!-- ----------------The Nav Bar Start----------------->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- Logo Begin -->
+        <a class="navbar-brand" href="#">
+            <img src="images/logo.png" width="200" class="d-inline-block align-top" onclick="magic()"
+                alt="Magic of Christmas">
+        </a>
+        <!-- Logo End -->
+        <a class="navbar-brand" href="#">Welcome to the North Pole Console</a>
+        <!-- Making Navbar hamburger menu -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navigation Items -->
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list.html">List Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="workshop.html">Workshop Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="journey.html">Journey Planner</a>
+                </li>
+            </ul>
+            <!-- Search Box -->
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Naughty or Nice?" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Check the List</button>
+            </form>
+        </div>
+    </nav>
+    <!-- --------------The Nav Bar End --------------->
+    <div>
+        <br />
+        <button id="showCreateButton" onclick="showCreate()">Create</button> <br />
+    </div>
+    <div class="left-half-page">
+        <p class="header" id="onlist">Toys in Production</p>
+        <table class="table table-dark" id="toysTable">
+            <tr>
+                <th>id</th>
+                <th>Item</th>
+                <th>Stock</th>
+            </tr>
+        </table>
+    </div>
+    <div class="right-half-page">
+        <p class="header" id="todo">New Toys</p>
+        <table class="table table-dark" id="toMakeTable">
+            <tr>
+                <th>id</th>
+                <th>Item</th>
+                <th>Quantity Required</th>
+            </tr>
+        </table>
+    </div>
+    <!-- Create /  Update Form  -- Begin -->
+    <div id="createUpdateForm" class="myForm" style="display: none">
+        <h2><span id="createLabel">Add a</span><span id="updateLabel">Update this</span> Toy</h2>
+        <input type="hidden" name="itemId" />
+        //<input type="hidden" name="listname" />
+        Item <input type="text" name="item"><br />
+        Quantity <input type="number" name="stock"><br />
+        <span><button id="doCreateButton" onclick="doCreate()">Add</button></span>
+        <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+    </div>
+    <!-- Create /  Update Form  -- End -->
+
+
+</body>
+<script>
+    function magic() {
+        snowStorm.toggleSnow()
+        /* snowStorm.snowColor = getRandomColor();
+        console.log(snowStorm.snowColor)
+                //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
+        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view*/
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    host = window.location.origin
+    function showCreate() {
+
+        // Adding the default values
+        var toy = {}
+        toy.item = ""
+        toy.stock = 0;
+        populateFormWithToy(toy)
+
+        document.getElementById("showCreateButton").style.display = "none"
+        document.getElementById("toMakeTable").style.display = "none"
+        document.getElementById("todo").style.display = "none"
+        document.getElementById("onlist").style.display = "none"
+        document.getElementById("toysTable").style.display = "none"
+        document.getElementById("createUpdateForm").style.display = "block"
+        document.getElementById("createLabel").style.display = "inline"
+        document.getElementById("updateLabel").style.display = "none"
+        document.getElementById("doCreateButton").style.display = "block"
+        document.getElementById("doUpdateButton").style.display = "none"
+    }
+
+    function showUpdate(buttonElement) {
+        document.getElementById("showCreateButton").style.display = "none"
+        document.getElementById("toMakeTable").style.display = "none"
+        document.getElementById("todo").style.display = "none"
+        document.getElementById("onlist").style.display = "none"
+        document.getElementById("toysTable").style.display = "none"
+        document.getElementById("createUpdateForm").style.display = "block"
+        document.getElementById("createLabel").style.display = "none"
+        document.getElementById("updateLabel").style.display = "inline"
+        document.getElementById("doCreateButton").style.display = "none"
+        document.getElementById("doUpdateButton").style.display = "block"
+
+        var rowElement = buttonElement.parentNode.parentNode
+        console.log(rowElement)
+        // these is a way of finding the closest <tr> which would safer, closest()
+        var toy = getToyFromRow(rowElement)
+        populateFormWithToy(toy)
+    }
+
+
+    function doCreate() {
+        var form = document.getElementById('createUpdateForm')
+        var toy = {}
+        if (form.querySelector('input[name="item"]').value == "") {
+            alert("Please enter the item name!")
+            return
+        }
+        // Writes the data to a toy object
+        toy.item = form.querySelector('input[name="item"]').value
+        toy.stock = parseInt(form.querySelector('input[name="stock"]').value)
+
+        createToyAjax(toy);
+    }
+
+    function createToyAjax(toy) {
+        console.log(JSON.stringify(toy));
+        $.ajax({
+            "url": host + "/workshop",
+            "method": "POST",
+            "data": JSON.stringify(toy),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                toy.itemId = result.itemId;
+                addToyToTable(toy);
+                clearForm();
+                showViewAll();
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+
+
+    function showViewAll() {
+        console.log("I'm in showViewAll");
+        // Re-instates the Naughty and Nice Lists
+        document.getElementById("showCreateButton").style.display = "block"
+        document.getElementById("toysTable").style.display = "block"
+        document.getElementById("todo").style.display = "block"
+        document.getElementById("onlist").style.display = "block"
+        document.getElementById("toMakeTable").style.display = "block"
+        document.getElementById("createUpdateForm").style.display = "none"
+    }
+
+    function clearForm() {
+        // Clears the create toy form to make available for next use
+        var form = document.getElementById('createUpdateForm')
+        form.querySelector('input[name="item"]').value = ""
+        form.querySelector('input[name="stock"]').value = ""
+    }
+
+    function addToyToTable(toy) {
+        // Adds the toy info as a new row to the correct table 
+        /*
+        if (person.nice == "nice") {
+            var tableElement = document.getElementById("toysTable");
+        }
+        else {
+            var tableElement = document.getElementById("toMakeTable");
+        }
+        */
+        var tableElement = document.getElementById("toysTable");
+        var rowElement = tableElement.insertRow(-1); // -1 refees to adding one at the end
+        rowElement.setAttribute('itemId', toy.itemId);
+        // Set attribute here
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = toy.itemId;
+        var cell2 = rowElement.insertCell(1);
+        cell2.innerHTML = toy.item;
+        var cell3 = rowElement.insertCell(2);
+        cell3.innerHTML = toy.stock;
+        var cell4 = rowElement.insertCell(3);
+        cell4.innerHTML = "<button onclick = 'showUpdate(this)'>Update</button>"
+        var cell5 = rowElement.insertCell(4);
+        cell5.innerHTML = "<button onclick = 'doDelete(this)'>Delete</button>"
+    }
+
+    function doDelete(r) {
+        var rowElement = r.parentNode.parentNode
+        /*
+        if (rowElement.cells[5].firstChild.textContent == "nice") {
+            var tableElement = document.getElementById('theNiceList')
+        }
+        else {
+            var tableElement = document.getElementById('theNaughtyList')
+        }
+        */
+        var tableElement = document.getElementById('toysTable')
+        var index = r.parentNode.parentNode.rowIndex;
+        var toy = {}
+
+        toy.itemId = rowElement.cells[0].firstChild.textContent
+        deleteToyAjax(toy.itemId);
+        tableElement.deleteRow(r.parentNode.parentNode.rowIndex);
+
+    }
+
+    function deleteToyAjax(itemId) {
+        console.log(JSON.stringify("deleting " + itemId));
+        $.ajax({
+            "url": host + "/workshop/" + encodeURI(itemId),
+            // "url": "http://127.0.0.1:5000/workshop/" + encodeURI(itemId),
+            "method": "DELETE",
+            "data": "",
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                //console.log(itemIdd);
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        })
+    }
+
+
+    function getToyFromRow(rowElement) {
+        // Collects the toy's existing data
+        var toy = {}
+        toy.itemId = rowElement.getAttribute("itemId")
+        toy.item = rowElement.cells[1].firstChild.textContent
+        toy.stock = rowElement.cells[2].firstChild.textContent
+        console.log(toy)
+        return toy
+    }
+
+    function populateFormWithToy(toy) {
+        // Populate the form with the info from the row
+        console.log(toy);
+        var form = document.getElementById("createUpdateForm")
+        form.querySelector("input[name='itemId']").disabled = true
+        form.querySelector("input[name='itemId']").value = toy.itemId
+        //form.querySelector("input[name='listname']").disabled = true
+        //form.querySelector("input[name='listname']").value = person.nice
+        form.querySelector("input[name='stock']").value = toy.stock
+    }
+
+    function getToyFromForm() {
+        var form = document.getElementById('createUpdateForm')
+        var toy = {}
+        toy.itemId = form.querySelector('input[name="itemId"]').value
+        toy.item = form.querySelector('input[name="item"]').value
+        toy.stock = parseInt(form.querySelector('input[name="stock"]').value)
+        console.log(JSON.stringify(toy))
+        return toy
+    }
+    function setToyInRow(rowElement, toy) {
+        rowElement.cells[0].firstChild.textContent = toy.itemId
+        rowElement.cells[1].firstChild.textContent = toy.item
+        rowElement.cells[2].firstChild.textContent = toy.stock
+    }
+
+    function doUpdate() {
+        // Get the toys data
+        var toy = getToyFromForm();
+        // Record the row affected
+        var rowElement = document.getElementById(toy.itemId)
+        console.log(rowElement.parentElement)
+        updateToyAjax(toy);
+        /*
+        if (document.getElementById("createUpdateForm").querySelector('input[name="listname"]').value != person.nice) {
+            doSwapTable(person)
+        }
+        else {
+            setPersonInRow(rowElement, person);
+        }
+        */
+        // Put the updated toy details back in correct row
+        setToyInRow(rowElement, toy);
+        clearForm();
+        showViewAll();
+    }
+
+    function doSwapTable(person) {
+        var r = document.getElementById(person.id).rowIndex
+
+        // If the person is now nice
+        if (person.nice == "nice") {
+            // they must have been in the Naughty Table
+            var tableElement = document.getElementById('theNaughtyList')
+        }
+        else {
+            // Or else they were in the Nice Table
+            var tableElement = document.getElementById('theNiceList')
+        }
+        /*
+        var index = r.parentNode.parentNode.rowIndex;
+        // Delete the row from the old table
+        tableElement.deleteRow(r.parentNode.parentNode.rowIndex); */
+        tableElement.deleteRow(r);
+        // Add person to the correct table
+        addPersonToTable(person)
+    }
+
+
+    function updateToyAjax(toy) {
+        console.log(JSON.stringify(toy));
+        $.ajax({
+            "url": host + "/workshop/" + encodeURI(toy.itemId),
+            // "url": "http://127.0.0.1:5000/workshop/" + encodeURI(toy.itemId), // need encodeURI to automatically addd %20% etc
+            "method": "PUT",
+            "data": JSON.stringify(toy), // converts the toy details to JSON string
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                console.log(result);
+                // Put the updated toy details back in correct row
+
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+    function getAll() {
+        $.ajax({
+            "url": host + "/workshop",
+            //"url": "http://127.0.0.1:5000/workshop",
+            "method": "GET",
+            "data": "",
+            "dataType": "JSON",
+            "success": function (result) {
+                console.log(result);
+                for (toy of result) {
+                    addToyToTable(toy);
+                }
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+
+    }
+    getAll();
+
+</script>
+
+</html>
