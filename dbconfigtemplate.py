@@ -4,3 +4,5 @@ mysql ={
     "password":"",
     "database":"drproject"
 }
+
+weatherKey= "INSERT YOUR KEY HERE"

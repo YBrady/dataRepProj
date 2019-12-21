@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather & Messaging Centre</title>
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Needed to fix a favicon.ico on Chrome -->
+    <link rel="shortcut icon" href="#" />
+    
+    <!-- Snowstorm-->
+    <script type="text/javascript" src="snowstorm.js"></script>
+    <!--- Call the script for AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- And Skycons -->
+    <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
+    <!-- And the snow-->
+    <script type="text/javascript">
+        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view
+    </script>
+
+</head>
+<body>
+        <!-- ----------------The Nav Bar Start----------------->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Logo Begin -->
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.png" width="170" class="d-inline-block align-top" onclick="magic()"
+                    alt="Magic of Christmas">
+            </a>
+            <!-- Logo End -->
+            <span id="loginUser"></span>
+            <!-- Making Navbar hamburger menu -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation Items -->
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">List Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshop.html">Workshop Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="other.html">Weather & Messaging Centre</a>
+                    </li>
+                </ul>
+                <!-- Search Box -->
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" id="search" type="search" placeholder="Naughty or Nice?"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" onclick="naughtyOrNice()">Check the List</button>
+                    <button class="btn btn-outline-success m-2 my-sm-0" id="Logou" onclick="logOut()">Logout</button>
+                </form>
+            </div>
+        </nav>
+        <!-- --------------The Nav Bar End --------------->
+    <div class="row">
+        <div class="col"></div>
+    </div>
+    <!-- Overall Header section -->
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+            <p class="header" id="weatherHead" style="display: none">Weather at The North Pole</p>
+        </div>
+        <!-- Buttons to get the info from APIs --> 
+        <div class="col-sm-2">
+            <button onclick="getWeather()">Get Weather Info</button>
+        </div>
+        <div class="col-sm-2">
+            <button onclick="getMail()">Get Unread Mail</button>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <!-- Weather Info -->
+    <div class ="container" id="weatherInfo" style="display: none">
+        <!-- Weather Headers-->
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <p style="color:white">Weather Last Christmas</p>
+            </div>
+            <div class="col-sm-1"> </div>
+            <div class="col-sm-2">
+                <p style="color:white">Current Weather</p>
+            </div>
+            <div class="col-sm-1"> </div>
+            <div class="col-sm-2">
+                <p style="color:white">Weather Forecast This Christmas</p>
+            </div>
+        </div>
+        <!-- Weather Icons -->
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <canvas id="iconPast" width="128" height="128"></canvas>
+            </div>
+            <div class="col-sm-1"> </div>
+            <div class="col-sm-2">
+                <canvas id="iconCurrent" width="128" height="128"></canvas>        
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <canvas id="iconFuture" width="128" height="128"></canvas>        
+            </div>
+        </div>
+        <!-- Temperature Readings -->
+        <div class="row">
+            <div class="col-sm-1">
+                <p style="color:white">Temperature (degC)</p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="tempPast"></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="tempCurrent"></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="tempFuture"></p>
+            </div>
+        </div>
+        <!-- Summary Readings -->
+        <div class="row">
+            <div class="col-sm-1">
+                <p style="color:white">Summary</p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="summPast"></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="summCurrent"></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <p style="color:white" id="summFuture"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Mails -->
+    <div class="container" id="msgInfo" style="display: none">
+        <div class=row>
+        </div>
+        <div class=row>
+            <p class="header">Unread Messages</p>
+        </div>
+
+        <div class=row>
+            <table class="table table-dark" id="msgTable">
+                <th>From</th>
+                <th>Subject</th>
+                <th>Message Snippet</th>
+                <th>Please?</th>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script> 
+    // Easter Egg
+    function magic(){
+        snowStorm.toggleSnow()
+    }
+
+    host = window.location.origin
+
+    // Calls the api to get the weather information from North Pole
+    // From last Christmas, now and next Christmas
+    function getWeather(){
+        // Show the weather parts of page
+        document.getElementById("weatherHead").style.display = "block"
+        document.getElementById("weatherInfo").style.display = "block"
+        $.ajax({
+            "url": host + "/other/weather",
+            //"url": "http://127.0.0.1:5000/other/weather",
+            "method": "GET",
+            "data": "",
+            "dataType": "JSON",
+            "success": function (result) {
+                document.getElementById("tempPast").innerText = result[0].temperature
+                document.getElementById("tempCurrent").innerText = result[1].temperature
+                document.getElementById("tempFuture").innerText = result[2].temperature
+                document.getElementById("summPast").innerText = result[0].summary
+                document.getElementById("summCurrent").innerText = result[1].summary
+                document.getElementById("summFuture").innerText = result[2].summary
+                
+                // Skycons - animated icons
+                // A bit gimmicky and possbly too hard on peformance for real world application
+                var skycons = new Skycons({ "color": "pink" });
+                // Trouble relating icons and Skycons so did a bit of string manipulation
+                pastIcon =  (result[0].icon).toUpperCase();
+                pastIcon = pastIcon.replace(/-/g, "_");
+                pastIcon = pastIcon.replace(/ /g, "_");
+                skycons.set("iconPast", Skycons[pastIcon]);
+                currentIcon = (result[1].icon).toUpperCase();
+                currentIcon = currentIcon.replace(/-/g, "_");
+                currentIcon = currentIcon.replace(/ /g,"_");
+                skycons.set("iconCurrent", Skycons[currentIcon]);
+                futureIcon = (result[2].icon).toUpperCase();
+                futureIcon = futureIcon.replace(/-/g, "_");
+                futureIcon = futureIcon.replace(/ /g, "_");
+                skycons.set("iconFuture", Skycons[futureIcon]);
+                // And animate
+                skycons.play();
+            },
+            // Error logging
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+        // Calls the mail api via server1 / projApi.py
+        function getMail() {
+            // Show the relevant art of page 
+            document.getElementById("msgInfo").style.display = "block"
+            // Do the Ajax call
+            $.ajax({
+                "url": host + "/other/mail",
+                //"url": "http://127.0.0.1:5000/other/mail",
+                "method": "GET",
+                "data": "",
+                "dataType": "JSON",
+                "success": function (result) {
+                    for (message of result) {
+                        addMessageToTable(message);
+                    }
+                },
+                "error": function (xhr, status, error) {
+                    console.log("error: " + status + " msg:" + error);
+                }
+            });
+        }    
+    
+    // Add the messages to the table
+    function addMessageToTable(message){
+
+            var tableElement = document.getElementById("msgTable");
+            var rowElement = tableElement.insertRow(-1); // -1 refers to adding one at the end
+
+            // Recording From, Subject and Snippets only from UNREAD emails.
+            var cell1 = rowElement.insertCell(0);
+            cell1.innerHTML = message.msgFrom;
+            var cell2 = rowElement.insertCell(1);
+            cell2.innerHTML = message.msgSubject;
+            var cell3 = rowElement.insertCell(2);
+            cell3.innerHTML = message.msgSnippet;
+            var cell4 = rowElement.insertCell(3);
+
+            // Also checking for manners - 
+            // if they said please (or were renting something!)
+            // is noted as an indication of being on the nice list
+            if ((cell3.innerText).search("lease") > 0) {  
+                cell4.innerHTML = "Indication of Nice";
+            }
+            // no manners - indication of being on the naughty list
+            else{
+                cell4.innerHTML = "Indication of Naughty";
+            }
+    }
+            // Checking whether someone is on the naughty or nice list
+            // Only brings back the first answer
+            function naughtyOrNice() {
+                name = document.getElementById("search").value
+                if (name != "") {
+                    // Call the function 
+                    $.ajax({
+                        "url": host + "/list/" + encodeURI(name),
+                        "method": "GET",
+                        "data": "",
+                        "dataType": "JSON",
+                        contentType: "application/json; charset=utf-8",
+                        "success": function (result) {
+                            // Just put it on the alert
+                            alert(result.name + " is on the " + result.nice + " list.")
+                        },
+                        "error": function (xhr, status, error) {
+                            console.log("error: " + status + " msg:" + error);
+                        }
+                    });
+                }
+            }
+
+            function logOut() {
+                sessionStorage.setItem("login", "");
+                location.href = "home.html"
+            }
+
+            if (sessionStorage.getItem("login") === null || sessionStorage.getItem("login") == "") {
+                location.href = "home.html";
+            }
+
+</script>
+
+</html>

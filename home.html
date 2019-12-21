@@ -1,128 +1,359 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Home Page</title>
-
+    <head>
+        <title>Home Page</title>
+        <!-- Needed to fix a favicon.ico on Chrome -->
+        <link rel="shortcut icon" href="#" />
+        <!-- The link to bootstrap-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- The css sheet -->
         <link rel="stylesheet" type="text/css" href="style.css">
+        <!--- Call the script for AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- THe Script for the Snow -->
+        <script type="text/javascript" src="snowstorm.js"></script>
+        <script type="text/javascript">
+            snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
+            snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view
+        </script>
 
-    <script type="text/javascript" src="snowstorm.js"></script>
-    <script type="text/javascript">
-        //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
-        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
-        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view
-    </script>
+    </head>
 
-</head>
-<body class="body-home">
-    <!-- ----------------The Nav Bar Start----------------->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Logo Begin -->
-        <a class="navbar-brand" href="#">
-            <img src="images/logo.png"  width="200" class="d-inline-block align-top"
-                onclick="magic()" alt="Magic of Christmas">
-        </a>
-        <!-- Logo End -->
-        <a class="navbar-brand" href="#">Welcome to the North Pole Console</a>
-        <!-- Making Navbar hamburger menu -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navigation Items -->
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="list.html">List Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="workshop.html">Workshop Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="journey.html">Journey Planner</a>
-                </li>
-            </ul>
-            <!-- Search Box -->
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Naughty or Nice?" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Check the List</button>
-            </form>
-        </div>
-    </nav>
+    <body class="body-home">
+        <!-- ----------------The Nav Bar Start----------------->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Logo Begin -->
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.png" width="170" class="d-inline-block align-top" onclick="magic()"
+                    alt="Magic of Christmas">
+            </a>
+            <!-- Logo End -->
+            <span id="loginUser"></span>
+            <!-- Making Navbar hamburger menu -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation Items -->
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">List Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshop.html">Workshop Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="other.html">Weather & Messaging Centre</a>
+                    </li>
+                </ul>
+                <!-- Search Box -->
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" id="search" type="search" placeholder="Naughty or Nice?" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" onclick="naughtyOrNice()">Check the List</button>
+                    <button class="btn btn-outline-success m-2 my-sm-0" id="Login" onclick="openForm()">User Login</button>
+                </form>
+            </div>
+        </nav>
         <!-- --------------The Nav Bar End --------------->
-    <p class = "header">What would you like to do today?</h1>
-
-    <div class="left-half-page">
-        <table >
-            <tr>
-                <td><a href="list.html"><img class="image" src="images/toy.png" height="120"></a></td>
-                <td><button type="button" class="btn btn-light btn-block" id="btnList">List Admin</button></td>
-            </tr>
-            <tr>
-                <td><a href="workshop.html"><img class="image" src="images/toy.png" height="120"></a></td>
-                <td class="spacer-row"><button type="button" class="btn btn-light btn-block" id="btnToys">Workshop Admin</button><br> </td>
-            </tr>
-            <tr>
-                <td><a href="journey.html"></a><img class="image" src="images/toy.png" height="120"></a></td>
-                <td class="spacer-row"><button type="button" class="btn btn-light btn-block" id="btnJourney">Journey Planner</button><br> </td>
-            </tr>
-        
-        </table>
-    </div>
-<!--        <div>
-            <div class="left-half-page">
-                <a href="list.html"><im class="image" src="images/toy.png" height="120"><a>
+        <!-- -----------------Login Form ----------------->
+        <form class="form-inline bg-light justify-content-center" id="myForm">
+            <div class="form-group">
+                <label class="mx-2 mb-2" for="email"><b>Email</b></label>
+                <input class="mb-2" type="email" id="loginEmail" placeholder="Enter Email" name="email" required>
             </div>
-            <div class="right-half-page">
-                <button type="button" class="btn btn-light btn-block" id="btnList">List Admin</button>
+            <div class="form-group">
+                <label for="psw" class="mx-2 mb-2"><b>Password</b></label>
+                <input class="mb-2" type="password" id="psw" placeholder="Enter Password" name="psw" required>
             </div>
-        </div>
-        <div>
-            <div class="left-half-page">
-                <a href="workshop.html"><img class="image" src="images/toy.png" height="120"><a>
+            <button type="button" class="btn btn-outline-success mx-2 mb-2" onclick="checkLogin()">Login</button>
+            <button type="button" id="Cancel" class="btn btn-outline-secondary mx-2 mb-2"
+                onclick="closeForm()">Cancel</button>
+        </form>
+        <!--------------- End of Login Form --------------->
+        <!-- Menu Options-->
+            <div class="container">
+                <div class="row">
+                    <p class="h1 my-3 text-light">What would you like to do today?</p>
+                </div>  
+                <div class="row">
+                    <div class="col-xl my-3"></div>
+                </div>
+                <!-- Go to the List Administration -->
+                <div class="row align-items-center">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <img class="image" src="images/list.jpg" height="120">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-light btn-block" id="btnList" onclick="chkAccess('list')">List Admin</button>
+                    </div>
+                </div>
+                <!-- Go to the Workshop Administration -->
+                <div class="row">
+                    <div class="col-xl my-3"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-2">
+                        <img class="image" src="images/toy.png" height="120">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-light btn-block" id="btnToys" onclick="chkAccess('workshop')">Workshop Admin</button><br>
+                    </div>
+                </div>
+                <!--- Go to the Weather and Messaging Centre-->
+                <div class="row">
+                    <div class="col-xl my-3"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <img class="image" src="images/north-pole.png" height="120">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-light btn-block" id="btnOther" onclick="chkAccess('other')">Weather & Messaging Centre</button><br>
+                    </div>
+                </div>
             </div>
-            <div class="right-half-page">
-                <button type="button" class="btn btn-light btn-block" id="btnList">Workshop Admin</button>
-            </div>
-        </div>
-        <div class="left-half-page">
-            <a href="journey.html"><img class="image" src="images/toy.png" height="120"><a>
-        </div>
-        <div class="right-half-page">
-            <button type="button" class="btn btn-light btn-block" id="btnList">Journey Planner</button>
-        </div>
-    </div>
-    <div class="right-half-page">
-        something
-    </div>-->
-
-
-</body>
-<script>
-    function magic(){
-        snowStorm.toggleSnow()
-       /* snowStorm.snowColor = getRandomColor();
-        console.log(snowStorm.snowColor)
-                //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
-        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
-        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view*/
-    }
-
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+    </body>
+    <script>
+        // Easter Egg - turns the snow on and off
+        function magic() {
+            snowStorm.toggleSnow()
         }
-        return color;
-    }
+        //--- This bit is to pass the username from each page and allow the user to log out--
+        // Cater for the first time form is opened - login not generated yet
+        if (sessionStorage.getItem("login") === null) {
+            sessionStorage.setItem("login", "");
+        }
+        // If there is a user logged in
+        if (sessionStorage.getItem('login').length > 0) {
+            // Put the welcome message up
+            document.getElementById("loginUser").innerHTML = "Welcome " + sessionStorage.getItem('login');
+            // Change the name of the button to Log Out
+            document.getElementById("Login").innerHTML = "Log Out";
+            document.getElementById("myForm").style.display = "none";
+        } else {
+            // Otherwise, clear the welcome message
+            document.getElementById("loginUser").innerHTML = "";
+            // Change the button to a login button
+            document.getElementById("Login").innerHTML = "User Login";
+        };
 
+        function openForm() {
+            console.log(sessionStorage.getItem('login'))
+            document.getElementById("myForm").style.display = "block";
+            // The cancel button is either a cancel / logout depending if there is someone logged in
+            if (sessionStorage.getItem('login').length > 0) {
+                closeForm()
+                //document.getElementById("Cancel").innerHTML = "Logout";
+            } else {
+                document.getElementById("Cancel").innerHTML = "Cancel";
+            }
+        }
 
-</script>
+        function closeForm(loginOK) {
+            // Hide the form
+            document.getElementById("myForm").style.display = "none";
+            // Reset the fields
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("psw").value = "";
+
+            // If its not a successful login
+            if (loginOK === undefined) {
+                // Reset the local storage of username
+                sessionStorage.setItem('login', "");
+                // Clear the welcome message
+                document.getElementById("loginUser").innerHTML = "";
+                // Set the buttons to their correct display names
+                document.getElementById("Cancel").innerHTML = "Cancel";
+                document.getElementById("Login").innerHTML = "User Login";
+            } else {
+                // Login successful - set the buttons to their correct display names
+                document.getElementById("Login").innerHTML = "Log Out";
+                document.getElementById("Cancel").innerHTML = "Log Out";
+            }
+        }
+
+        function checkLogin() {
+            // First check that the email is a valid email
+            var emailResult = checkEmail();
+            if (emailResult === true) {
+                //--- Valid Email Address-- 
+                // Now check password
+                var pswResult = checkPassword();
+            } else {
+                sessionStorage.setItem('login', '');
+                document.getElementById("Login").innerHTML = "User Login";
+            }
+
+            if (pswResult === true) {
+                //-- Email / Password Combo Passes Validation--
+                // populate a welcome message
+                document.getElementById("loginUser").innerHTML = "Welcome " + document.getElementById("loginEmail").value;
+                sessionStorage.setItem('login', document.getElementById("loginEmail").value);
+                alert("Welcome, " + sessionStorage.getItem('login'));
+                // Close and reset form contents
+                closeForm(true);
+            } else {
+                //--- Validation Fails-- 
+                sessionStorage.setItem('login', '');
+                document.getElementById("Login").innerHTML = "User Login";
+            }
+        }
+
+        function checkPassword() {
+            //--- This function checks for a minimum password length and if OK call the checkEmail function --
+            // Get the password from the form
+            var psw = document.getElementById("psw").value;
+            // Put the username to all lowercase in case caps lock was on
+            var username = (document.getElementById("loginEmail").value).toLowerCase();
+
+            // Set a group of usernames and associated passwords to log in
+            if (((username === "me@me.com") && (psw === "mepassword")) ||
+                ((username === "you@you.com") && (psw === "youpassword")) ||
+                ((username === "username@user.com") && (psw === "userpassword")) ||
+                ((username === "someone@domain.com") && (psw === "someonespassword")) ||
+                ((username === "other@them.com") && (psw === "otherpassword")) ||
+                ((username === "last@end.com") && (psw === "lastone"))) {
+                return true;
+            } else {
+                // Login failure
+                alert("Login Failure: Incorrect Password Entered!")
+                return false;
+            }
+        }
+
+        function checkEmail() {
+            /* This function checks for a valid email address specifically:
+                Initial text before @ (textbeforeAt)
+                Presence of @ (atIsThere)
+                Text between @ and . (textAfterAt / textBeforeDot)
+                Presence of domain dot after @ (dotAfterAt)
+                Text after domain dot (textAfterDot)
+                It also checks for spaces in the email address
+                */
+            var add = document.getElementById("loginEmail").value;
+            var textBeforeAt = false;
+            var atIsThere = false;
+            var textAfterAt = false;
+            var textBeforeDot = false;
+            var dotAfterAt = false;
+            var textAfterDot = false;
+            var err = ""
+            //-- This iterates through each letter of the address in turn--
+            for (var i = 0; i < add.length; ++i) {
+                switch (add.charAt(i)) {
+                    //-- Checks for the characters specified-- 
+                    case "@": {
+                        // If there is already an @ in place - populate the error string
+                        if (atIsThere == true) {
+                            err = "Only one @ in the email address.";
+                            // If there is some text before it set the atIsThere flag to true 
+                        } else if (textBeforeAt == true) {
+                            atIsThere = true;
+                        }
+                        break;
+                    }
+                    case ".": {
+                        // Looks for the dot in the email address 
+                        // The flag is only set to true if the dot appears after some text that appears after the @ 
+                        if ((atIsThere == true) && (textAfterAt == true)) {
+                            dotAfterAt = true;
+                        }
+                        break;
+                    }
+                    case " ": {
+                        // No spaces allowed
+                        if (add.charAt(i) == " ") {
+                            err = err + "No spaces in email address.";
+                        }
+                        break;
+                    }
+                    default: {
+                        //--- This is where non - special characters are checked--
+                        if (atIsThere == true) {
+                            // A flag to denote if there are characters after the @
+                            textAfterAt = true;
+                            // And after the dot (after the @)
+                            if (dotAfterAt == true) {
+                                textAfterDot = true;
+                            } else {
+                                // Or after the @ and before the dot
+                                textBeforeDot = true;
+                            }
+                        } else {
+                            // Flag to denote if text was before @
+                            textBeforeAt = true;
+                        }
+                    }
+                }
+            }
+
+            //-- This part checks the flags-- 
+            // If there is no @
+            if (atIsThere == false) {
+                err = "Email address needs '@'";
+                // Checks the domain conditions
+            } else if ((textAfterAt == false) || (textBeforeDot == false) || (textAfterDot == false) || (dotAfterAt == false)) {
+                err = "Please supply a valid domain name.";
+            }
+
+            //-- Output of function --
+            if (err != "") {
+                //-- Invalid Email Address-- 
+                alert("Error: " + err)
+                return (false);
+            } else {
+                //-- Valid Email Address-- 
+                return (true);
+            }
+        }  
+
+        // Checks to make sure someone is logged in before we can navigate away
+        function chkAccess(where){
+            if  (sessionStorage.getItem("login") === null || sessionStorage.getItem("login").length<1){
+                alert("Please log in to get access.")
+            } 
+            else{
+                location.href = where + ".html";
+            }
+        }
+
+        host = window.location.origin
+
+        // Checking whether someone is on the naughty or nice list
+        // Only brings back the first answer
+        function naughtyOrNice(){
+            name = document.getElementById("search").value
+            if (name!=""){
+            // Call the function 
+                $.ajax({
+                    "url": host + "/list/" + encodeURI(name),
+                    "method": "GET",
+                    "data": "",
+                    "dataType": "JSON",
+                    contentType: "application/json; charset=utf-8",
+                    "success": function (result) {
+                        // Just put it on the alert
+                        alert(result.name + " is on the " + result.nice + " list.")
+                    },
+                    "error": function (xhr, status, error) {
+                        console.log("error: " + status + " msg:" + error);
+                    }
+                });
+            }
+        }
+        
+
+    </script>
 
 </html>

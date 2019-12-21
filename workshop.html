@@ -3,7 +3,8 @@
 
 <head>
     <title>Workshop Admin</title>
-
+    <!-- Needed to fix a favicon.ico on Chrome -->
+    <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -21,77 +22,122 @@
 </head>
 
 <body>
-    <!-- ----------------The Nav Bar Start----------------->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Logo Begin -->
-        <a class="navbar-brand" href="#">
-            <img src="images/logo.png" width="200" class="d-inline-block align-top" onclick="magic()"
-                alt="Magic of Christmas">
-        </a>
-        <!-- Logo End -->
-        <a class="navbar-brand" href="#">Welcome to the North Pole Console</a>
-        <!-- Making Navbar hamburger menu -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navigation Items -->
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="list.html">List Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="workshop.html">Workshop Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="journey.html">Journey Planner</a>
-                </li>
-            </ul>
-            <!-- Search Box -->
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Naughty or Nice?" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Check the List</button>
-            </form>
+        <!-- ----------------The Nav Bar Start----------------->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Logo Begin -->
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.png" width="170" class="d-inline-block align-top" onclick="magic()" alt="Magic of Christmas">
+            </a>
+            <!-- Logo End -->
+            <span id="loginUser"></span>
+            <!-- Making Navbar hamburger menu -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation Items -->
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">List Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshop.html">Workshop Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="other.html">Weather & Messaging Centre</a>
+                    </li>
+                </ul>
+                <!-- Search Box -->
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" id="search" type="search" placeholder="Naughty or Nice?"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" onclick="naughtyOrNice()">Check the List</button>
+                    <button class="btn btn-outline-success m-2 my-sm-0" id="Logou" onclick="logOut()">Logout</button>
+                </form>
+            </div>
+        </nav>
+        <!-- --------------The Nav Bar End --------------->
+    <div class="container">
+        <div class="row align-items-center justify-content-around form-group">
+            <div class="col-sm-4">
+                <p class="header" id="onlist">Toys in Production</p>
+            </div>
+            <div class="coll-sm-4">
+                <p class="header" id="todo">New Toys Wanted</p>
+            </div>
         </div>
-    </nav>
-    <!-- --------------The Nav Bar End --------------->
-    <div>
-        <br />
-        <button id="showCreateButton" onclick="showCreate()">Create</button> <br />
-    </div>
-    <div class="left-half-page">
-        <p class="header" id="onlist">Toys in Production</p>
-        <table class="table table-dark" id="toysTable">
-            <tr>
-                <th>id</th>
-                <th>Item</th>
-                <th>Stock</th>
-            </tr>
-        </table>
-    </div>
-    <div class="right-half-page">
-        <p class="header" id="todo">New Toys</p>
-        <table class="table table-dark" id="toMakeTable">
-            <tr>
-                <th>id</th>
-                <th>Item</th>
-                <th>Quantity Required</th>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-sm-3 mb-2">
+                <button class="btn btn-outline-success btn-lg btn-block" id="showCreateButton" onclick="showCreate()">+ Add New
+                    Toy </button>
+            </div>
+            <div class="col-sm-5"> </div>
+            <div class="col-sm-3 mb-2">
+                <button class="btn btn-outline-success btn-lg btn-block" id="showCreateButton" onclick="getToysToMake()">Refresh
+                    Toys to Make</button>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-6">
+                <table class="table table-striped table-dark table-borderless"  id="toysTable">
+                    <tr>
+                        <th>id</th>
+                        <th>Item</th>
+                        <th>Stock</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3">
+                <table class="table  table-striped table-dark" id="toMakeTable">
+                    <tr>
+                        <th>Item</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- Create /  Update Form  -- Begin -->
-    <div id="createUpdateForm" class="myForm" style="display: none">
-        <h2><span id="createLabel">Add a</span><span id="updateLabel">Update this</span> Toy</h2>
-        <input type="hidden" name="itemId" />
-        //<input type="hidden" name="listname" />
-        Item <input type="text" name="item"><br />
-        Quantity <input type="number" name="stock"><br />
-        <span><button id="doCreateButton" onclick="doCreate()">Add</button></span>
-        <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+    <div id="createUpdateForm" class="container" style="display: none">
+        <div class="row form-group">
+            <h2><span id="createLabel">Add a</span><span id="updateLabel">Update this</span> Toy</h2>
+        </div>
+            
+        <input type="hidden" name="itemId"/>
+        <div class="row form-group">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1" style="color:white">Item</div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <input type="text" name="item"><br />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1" style="color:white">Quantity</div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <input type="number" name="stock"><br />
+            </div>
+        </div>
+        <div class = "row form-group"> 
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <span><button id="doCreateButton" class="btn btn-light btn-lg btn-block" onclick="doCreate()">Add</button></span>
+                <span><button id="doUpdateButton" class="btn btn-light btn-lg btn-block" onclick="doUpdate()">Update</button></span>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-light btn-lg btn-block" id="cancelButton" onclick="doCancel()">Cancel</button>
+            </div>
+        </div>
+
     </div>
     <!-- Create /  Update Form  -- End -->
 
@@ -100,20 +146,6 @@
 <script>
     function magic() {
         snowStorm.toggleSnow()
-        /* snowStorm.snowColor = getRandomColor();
-        console.log(snowStorm.snowColor)
-                //snowStorm.snowColor = '#99ccff'; // blue-ish snow!?
-        snowStorm.flakesMaxActive = 96;  // show more snow on screen at once
-        snowStorm.useTwinkleEffect = true; // let the snow flicker in and out of view*/
-    }
-
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     }
 
     host = window.location.origin
@@ -150,7 +182,6 @@
         document.getElementById("doUpdateButton").style.display = "block"
 
         var rowElement = buttonElement.parentNode.parentNode
-        console.log(rowElement)
         // these is a way of finding the closest <tr> which would safer, closest()
         var toy = getToyFromRow(rowElement)
         populateFormWithToy(toy)
@@ -167,12 +198,10 @@
         // Writes the data to a toy object
         toy.item = form.querySelector('input[name="item"]').value
         toy.stock = parseInt(form.querySelector('input[name="stock"]').value)
-
         createToyAjax(toy);
     }
 
     function createToyAjax(toy) {
-        console.log(JSON.stringify(toy));
         $.ajax({
             "url": host + "/workshop",
             "method": "POST",
@@ -182,6 +211,7 @@
             "success": function (result) {
                 toy.itemId = result.itemId;
                 addToyToTable(toy);
+                // In case this removes something from this list
                 clearForm();
                 showViewAll();
             },
@@ -191,16 +221,18 @@
         });
     }
 
-
+    function doCancel(){
+        clearForm();
+        showViewAll();
+    }
 
     function showViewAll() {
-        console.log("I'm in showViewAll");
-        // Re-instates the Naughty and Nice Lists
-        document.getElementById("showCreateButton").style.display = "block"
-        document.getElementById("toysTable").style.display = "block"
-        document.getElementById("todo").style.display = "block"
-        document.getElementById("onlist").style.display = "block"
-        document.getElementById("toMakeTable").style.display = "block"
+        // Re-instates the tables
+        document.getElementById("showCreateButton").style.display =  "block";
+        document.getElementById("toysTable").style.display = "block";
+        document.getElementById("todo").style.display =  "block";
+        document.getElementById("onlist").style.display =  "block";
+        document.getElementById("toMakeTable").style.display = "block";
         document.getElementById("createUpdateForm").style.display = "none"
     }
 
@@ -212,18 +244,9 @@
     }
 
     function addToyToTable(toy) {
-        // Adds the toy info as a new row to the correct table 
-        /*
-        if (person.nice == "nice") {
-            var tableElement = document.getElementById("toysTable");
-        }
-        else {
-            var tableElement = document.getElementById("toMakeTable");
-        }
-        */
         var tableElement = document.getElementById("toysTable");
-        var rowElement = tableElement.insertRow(-1); // -1 refees to adding one at the end
-        rowElement.setAttribute('itemId', toy.itemId);
+        var rowElement = tableElement.insertRow(-1); // -1 refers to adding one at the end
+        rowElement.setAttribute('id', toy.itemId);
         // Set attribute here
         var cell1 = rowElement.insertCell(0);
         cell1.innerHTML = toy.itemId;
@@ -237,20 +260,19 @@
         cell5.innerHTML = "<button onclick = 'doDelete(this)'>Delete</button>"
     }
 
+    function addToyToMakeTable(toy) {
+        var tableElement = document.getElementById("toMakeTable");
+        var rowElement = tableElement.insertRow(-1); // -1 refers to adding one at the end
+        // Set attribute here
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = toy;
+    }
+
     function doDelete(r) {
         var rowElement = r.parentNode.parentNode
-        /*
-        if (rowElement.cells[5].firstChild.textContent == "nice") {
-            var tableElement = document.getElementById('theNiceList')
-        }
-        else {
-            var tableElement = document.getElementById('theNaughtyList')
-        }
-        */
         var tableElement = document.getElementById('toysTable')
         var index = r.parentNode.parentNode.rowIndex;
         var toy = {}
-
         toy.itemId = rowElement.cells[0].firstChild.textContent
         deleteToyAjax(toy.itemId);
         tableElement.deleteRow(r.parentNode.parentNode.rowIndex);
@@ -267,7 +289,6 @@
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
             "success": function (result) {
-                //console.log(itemIdd);
             },
             "error": function (xhr, status, error) {
                 console.log("error: " + status + " msg:" + error);
@@ -279,19 +300,18 @@
     function getToyFromRow(rowElement) {
         // Collects the toy's existing data
         var toy = {}
-        toy.itemId = rowElement.getAttribute("itemId")
+        toy.itemId = rowElement.getAttribute("id")
         toy.item = rowElement.cells[1].firstChild.textContent
         toy.stock = rowElement.cells[2].firstChild.textContent
-        console.log(toy)
         return toy
     }
 
     function populateFormWithToy(toy) {
         // Populate the form with the info from the row
-        console.log(toy);
         var form = document.getElementById("createUpdateForm")
         form.querySelector("input[name='itemId']").disabled = true
         form.querySelector("input[name='itemId']").value = toy.itemId
+        form.querySelector("input[name='item']").value = toy.item
         //form.querySelector("input[name='listname']").disabled = true
         //form.querySelector("input[name='listname']").value = person.nice
         form.querySelector("input[name='stock']").value = toy.stock
@@ -303,9 +323,9 @@
         toy.itemId = form.querySelector('input[name="itemId"]').value
         toy.item = form.querySelector('input[name="item"]').value
         toy.stock = parseInt(form.querySelector('input[name="stock"]').value)
-        console.log(JSON.stringify(toy))
         return toy
     }
+
     function setToyInRow(rowElement, toy) {
         rowElement.cells[0].firstChild.textContent = toy.itemId
         rowElement.cells[1].firstChild.textContent = toy.item
@@ -317,46 +337,15 @@
         var toy = getToyFromForm();
         // Record the row affected
         var rowElement = document.getElementById(toy.itemId)
-        console.log(rowElement.parentElement)
         updateToyAjax(toy);
-        /*
-        if (document.getElementById("createUpdateForm").querySelector('input[name="listname"]').value != person.nice) {
-            doSwapTable(person)
-        }
-        else {
-            setPersonInRow(rowElement, person);
-        }
-        */
         // Put the updated toy details back in correct row
         setToyInRow(rowElement, toy);
         clearForm();
         showViewAll();
+        //getToysToMake();
     }
-
-    function doSwapTable(person) {
-        var r = document.getElementById(person.id).rowIndex
-
-        // If the person is now nice
-        if (person.nice == "nice") {
-            // they must have been in the Naughty Table
-            var tableElement = document.getElementById('theNaughtyList')
-        }
-        else {
-            // Or else they were in the Nice Table
-            var tableElement = document.getElementById('theNiceList')
-        }
-        /*
-        var index = r.parentNode.parentNode.rowIndex;
-        // Delete the row from the old table
-        tableElement.deleteRow(r.parentNode.parentNode.rowIndex); */
-        tableElement.deleteRow(r);
-        // Add person to the correct table
-        addPersonToTable(person)
-    }
-
 
     function updateToyAjax(toy) {
-        console.log(JSON.stringify(toy));
         $.ajax({
             "url": host + "/workshop/" + encodeURI(toy.itemId),
             // "url": "http://127.0.0.1:5000/workshop/" + encodeURI(toy.itemId), // need encodeURI to automatically addd %20% etc
@@ -367,7 +356,6 @@
             "success": function (result) {
                 console.log(result);
                 // Put the updated toy details back in correct row
-
             },
             "error": function (xhr, status, error) {
                 console.log("error: " + status + " msg:" + error);
@@ -375,26 +363,139 @@
         });
     }
 
-    function getAll() {
+    function getToysToMake(){
+        // Re-create the toMakeTable
+        var mytbl = document.getElementById("toMakeTable");
+        mytbl.getElementsByTagName("tbody")[0].innerHTML = mytbl.rows[0].innerHTML;
+        getAll("make")
+        /*
         $.ajax({
-            "url": host + "/workshop",
-            //"url": "http://127.0.0.1:5000/workshop",
+            "url": host + "/workshop/toysToMake",
+            //"url": "http://127.0.0.1:5000/workshop/toysToMake",
             "method": "GET",
             "data": "",
             "dataType": "JSON",
             "success": function (result) {
                 console.log(result);
                 for (toy of result) {
-                    addToyToTable(toy);
+                    addToyToMakeTable(toy.toy);
                 }
             },
             "error": function (xhr, status, error) {
                 console.log("error: " + status + " msg:" + error);
             }
-        });
+        });*/
+    }
+
+    function getAll(what) {
+        if (what == "both"){
+            $.ajax({
+                "url": host + "/workshop/" + what,
+                //"url": "http://127.0.0.1:5000/workshop",
+                "method": "GET",
+                "data": "",
+                "dataType": "JSON",
+                "success": function (result) {
+                    stock = result.stock
+                    make = result.make
+                    for (toy of stock) {
+                        addToyToTable(toy);
+                    }
+                    var toyList = []
+                    for (toy of make){
+                        if (inArray(toy.toy,toyList) == false){
+                            toyList.push(toy.toy);
+                            addToyToMakeTable(toy.toy);
+                        }
+                    }
+                },
+                "error": function (xhr, status, error) {
+                    console.log("error: " + status + " msg:" + error);
+                }
+            });
+        }
+        else if (what =="make"){
+            $.ajax({
+                "url": host + "/workshop/" + what,
+                //"url": "http://127.0.0.1:5000/workshop",
+                "method": "GET",
+                "data": "",
+                "dataType": "JSON",
+                "success": function (resultMake) {
+                    var toyList = []
+                    for (toy of resultMake) {
+                        if (inArray(toy.toy, toyList) == false) {
+                            toyList.push(toy.toy);
+                            addToyToMakeTable(toy.toy);
+                        }
+                    }
+                },
+                "error": function (xhr, status, error) {
+                    console.log("error: " + status + " msg:" + error);
+                }
+            });            
+        }
+        else {
+            $.ajax({
+                "url": host + "/workshop/" + what,
+                //"url": "http://127.0.0.1:5000/workshop",
+                "method": "GET",
+                "data": "",
+                "dataType": "JSON",
+                "success": function (result) {
+                    for (toy of result) {
+                        addToyToTable(toy);
+                    }
+                },
+                "error": function (xhr, status, error) {
+                    console.log("error: " + status + " msg:" + error);
+                }
+            });
+        }
 
     }
-    getAll();
+
+    function inArray(target, array) {
+            for (var i = 0; i < array.length; i++) {
+                if (array[i] === target) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+                // Checking whether someone is on the naughty or nice list
+                // Only brings back the first answer
+                function naughtyOrNice() {
+                    name = document.getElementById("search").value
+                    if (name != "") {
+                        // Call the function 
+                        $.ajax({
+                            "url": host + "/list/" + encodeURI(name),
+                            "method": "GET",
+                            "data": "",
+                            "dataType": "JSON",
+                            contentType: "application/json; charset=utf-8",
+                            "success": function (result) {
+                                alert(result.name + " is on the " + result.nice + " list.")
+                            },
+                            "error": function (xhr, status, error) {
+                                console.log("error: " + status + " msg:" + error);
+                            }
+                        });
+                    }
+                }
+
+                function logOut() {
+                    sessionStorage.setItem("login", "");
+                    location.href = "home.html"
+                }
+
+    if (sessionStorage.getItem("login") === null || sessionStorage.getItem("login") == "") {
+        location.href = "home.html";
+    }
+
+    getAll("both");
 
 </script>
 
