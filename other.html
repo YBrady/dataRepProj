@@ -72,14 +72,14 @@
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-6">
-            <p class="header" id="weatherHead" style="display: none">Weather at The North Pole</p>
+            <p class="h1 my-3 text-light" id="weatherHead" style="display: none">Weather at The North Pole</p>
         </div>
         <!-- Buttons to get the info from APIs --> 
         <div class="col-sm-2">
-            <button onclick="getWeather()">Get Weather Info</button>
+            <button  class="btn btn-secondary my-2" onclick="getWeather()">Get Weather Info</button>
         </div>
         <div class="col-sm-2">
-            <button onclick="getMail()">Get Unread Mail</button>
+            <button  class="btn btn-secondary my-2" onclick="getMail()">Get Unread Mail</button>
         </div>
         <div class="col-sm-1"></div>
     </div>
@@ -90,15 +90,15 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-2">
-                <p style="color:white">Weather Last Christmas</p>
+                <p class= "text-center h4 my-3 text-light">Weather Christmas Eve 2018</p>
             </div>
             <div class="col-sm-1"> </div>
             <div class="col-sm-2">
-                <p style="color:white">Current Weather</p>
+                <p class="text-center h4 my-3 text-light">Current Weather</p>
             </div>
             <div class="col-sm-1"> </div>
             <div class="col-sm-2">
-                <p style="color:white">Weather Forecast This Christmas</p>
+                <p class="text-center h4 my-3 text-light">Weather Christmas Eve 2019</p>
             </div>
         </div>
         <!-- Weather Icons -->
@@ -106,62 +106,63 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-2">
-                <canvas id="iconPast" width="128" height="128"></canvas>
+                <canvas class="justify-content-center" id="iconPast" width="128" height="128"></canvas>
             </div>
             <div class="col-sm-1"> </div>
             <div class="col-sm-2">
-                <canvas id="iconCurrent" width="128" height="128"></canvas>        
+                <canvas class="justify-content-center" id="iconCurrent" width="128" height="128"></canvas>        
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <canvas id="iconFuture" width="128" height="128"></canvas>        
+                <canvas class="justify-content-center" id="iconFuture" width="128" height="128"></canvas>        
             </div>
         </div>
         <!-- Temperature Readings -->
         <div class="row">
             <div class="col-sm-1">
-                <p style="color:white">Temperature (degC)</p>
+                <p class="text-center h5 my-3 text-light">Temperature (degC)</p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="tempPast"></p>
+                <p class="text-center h6 my-3 text-light" id="tempPast"></p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="tempCurrent"></p>
+                <p class="text-center h6 my-3 text-light" id="tempCurrent"></p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="tempFuture"></p>
+                <p class="text-center h6 my-3 text-light" id="tempFuture"></p>
             </div>
         </div>
         <!-- Summary Readings -->
         <div class="row">
             <div class="col-sm-1">
-                <p style="color:white">Summary</p>
+                <p class="text-center h5 my-3 text-light">Summary</p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="summPast"></p>
+                <p class="text-center h6 my-3 text-light" id="summPast"></p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="summCurrent"></p>
+                <p class="text-center h6 my-3 text-light" id="summCurrent"></p>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <p style="color:white" id="summFuture"></p>
+                <p class="text-center h6 my-3 text-light" id="summFuture"></p>
             </div>
         </div>
     </div>
     <!-- Mails -->
     <div class="container" id="msgInfo" style="display: none">
+        <!-- Spacer Row-->
+        <div class=row></div>
+        <!-- Heading-->
         <div class=row>
+            <p class="h1 my-3 text-light">Unread Messages</p>
         </div>
-        <div class=row>
-            <p class="header">Unread Messages</p>
-        </div>
-
+        <!-- The Message Table -->
         <div class=row>
             <table class="table table-dark" id="msgTable">
                 <th>From</th>
@@ -194,9 +195,9 @@
             "data": "",
             "dataType": "JSON",
             "success": function (result) {
-                document.getElementById("tempPast").innerText = result[0].temperature
-                document.getElementById("tempCurrent").innerText = result[1].temperature
-                document.getElementById("tempFuture").innerText = result[2].temperature
+                document.getElementById("tempPast").innerText = Math.round(result[0].temperature)
+                document.getElementById("tempCurrent").innerText = Math.round(result[1].temperature)
+                document.getElementById("tempFuture").innerText = Math.round(result[2].temperature)
                 document.getElementById("summPast").innerText = result[0].summary
                 document.getElementById("summCurrent").innerText = result[1].summary
                 document.getElementById("summFuture").innerText = result[2].summary
