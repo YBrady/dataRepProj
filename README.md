@@ -1,6 +1,6 @@
 <img align="left" src="/images/GMIT-logo.png" alt="GMIT" width="200"/>                               <img align="right" src="/images/data-analytics.png" alt="HDipDA" width="300"/>  
 
-# Programming for Data Analytics Semester 2 2019 #
+# Data Representation Semester 2 2019 #
 
 ___________________________________________
 
@@ -26,18 +26,18 @@ Features include:
     - Easter egg (click on Believe)
 * Linkage to Weather and Gmail APIs
     - Categorises mails into "Indication of Nice / Naughty" based on content
-    - Email address: datarep.northpol@gmail.com
+    - Email address: datarep.northpole@gmail.com
     - Password available on moodle submission page.
 
 ### 2.1 Pages
 There are four pages as follows:  
 * Home - need to log in here to access any other screen
 * List Admin - to view and amend Naughty and Nice Lists
-* Workshop Admin - to see which toys are being manufacured and which that have been requested are not yet on the production list
+* Workshop Admin - to see which toys are being manufactured and which that have been requested are not yet on the production list
 * Weather and Messaging Center - Link to provide weather details at North Pole for Christmas Eve 2018, 2019 and current weather. (Too early for Christmas 2020 details.)
 
 ## 3.0 mySQL Application
-There is a SQL dump of the database included with some sample data in there too. 
+There is a SQL dump of the database included with some sample data in there too.    
 * Database name: drproject
 * Two Tables:
     - people: houses information on children on the naughty and nice lists  
