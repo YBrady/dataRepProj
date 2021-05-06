@@ -55,7 +55,7 @@ Faker==3.0.0
 fastcache==1.1.0
 filelock==3.0.12
 Flask==1.1.1
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 future==0.17.1
 gast==0.2.2
 gevent==1.4.0
